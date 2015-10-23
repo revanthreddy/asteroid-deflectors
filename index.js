@@ -12,30 +12,12 @@ var device = awsIot.device({
     region: 'us-east-1'
 });
 
-
-// device
-//   .on('connect', function() {
-//     console.log("device connected and online ");
-//     device.subscribe('FIRE');
-//   });
-  
-app.use(express.static(__dirname + '/ui'));  
-
-server.listen(3000);
-
-app.get('/', function (req, res) {
-  console.log("public directory  : "+__dirname);
-  res.sendfile(__dirname + '/index.html');
-});
-
-io.on('connection', function (socket) {
-  device
+device
   .on('connect', function() {
-    console.log("device connected and online ");
     device.subscribe('FIRE');
   });
-  
-  
+
+io.on('connection', function (socket) {
   
   device
   .on('message', function(topic, payload) {
@@ -47,5 +29,17 @@ io.on('connection', function (socket) {
     device.publish('THRUSTERS', JSON.stringify(thrusterPayload));
   });
 });
+
+
+  
+app.use(express.static(__dirname + '/ui'));  
+
+server.listen(3000);
+
+app.get('/', function (req, res) {
+  console.log("public directory  : "+__dirname);
+  res.sendfile(__dirname + '/index.html');
+});
+
 
 

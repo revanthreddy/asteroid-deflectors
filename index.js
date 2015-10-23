@@ -18,13 +18,13 @@ device
     device.subscribe('FIRE');
   });
   
-  
+app.use(express.static(__dirname + '/ui'));  
 
 server.listen(3000);
 
 app.get('/', function (req, res) {
   console.log("public directory  : "+__dirname);
-  res.sendfile(__dirname + '/ui/index.html');
+  res.sendfile(__dirname + '/index.html');
 });
 
 io.on('connection', function (socket) {

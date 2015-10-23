@@ -1,17 +1,35 @@
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script>
   var socket = io.connect('http://localhost:3000');
  
-    setTimeout(function(){
-      console.log("waiting ....")
-      socket.emit('thruster', {
+    // setTimeout(function(){
+    //   console.log("waiting ....")
+    //   socket.emit('thruster', {
+    //             "type" : "THRUSTER",
+    //             "id" : "1",
+    //             "x" : 1,
+    //             "y" : 2,
+    //             "z" : 3
+    //       });  
+    // } , 2);
+    
+  $.ajax({
+    url: '/thruster',
+    type: "POST",
+    data : {
                 "type" : "THRUSTER",
                 "id" : "1",
                 "x" : 1,
                 "y" : 2,
                 "z" : 3
-          });  
-    } , 2);
+      },
     
+    success: function (data) {
+        console.log(data);
+    }
+});
+  
+  
   
 </script>

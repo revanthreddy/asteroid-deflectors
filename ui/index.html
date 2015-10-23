@@ -1,15 +1,17 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://localhost:3000');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('thruster', {
+ 
+    setTimeout(function(){
+      console.log("waiting ....")
+      socket.emit('thruster', {
                 "type" : "THRUSTER",
                 "id" : "1",
-                "x" : 100,
-                "y" : 100,
-                "z" : 100,
-                "timestamp" : 141111763237
-          });
-  });
+                "x" : 1,
+                "y" : 2,
+                "z" : 3
+          });  
+    } , 2);
+    
+  
 </script>

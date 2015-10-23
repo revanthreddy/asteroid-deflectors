@@ -13,11 +13,11 @@ var device = awsIot.device({
 });
 
 
-device
-  .on('connect', function() {
-    console.log("device connected and online ");
-    device.subscribe('FIRE');
-  });
+// device
+//   .on('connect', function() {
+//     console.log("device connected and online ");
+//     device.subscribe('FIRE');
+//   });
   
 app.use(express.static(__dirname + '/ui'));  
 
@@ -29,7 +29,19 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  device
+  .on('connect', function() {
+    console.log("device connected and online ");
+    device.subscribe('FIRE');
+  });
+  
+  
+  
+  device
+  .on('message', function(topic, payload) {
+    console.log('message', topic, payload.toString());
+  });
+  
   socket.on('thruster', function (thrusterPayload) {
     console.log(thrusterPayload);
     device.publish('THRUSTERS', JSON.stringify(thrusterPayload));

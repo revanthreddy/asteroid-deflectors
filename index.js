@@ -16,16 +16,16 @@ device
   .on('connect', function() {
     device.subscribe('FIRE');
   });
-
-io.on('connection', function (socket) {
-  
-  device
+device
   .on('message', function(topic, payload) {
     console.log('message', topic, payload.toString());
   });
-  
+
+io.on('connection', function (socket) {
   socket.on('thruster', function (thrusterPayload) {
+    console.log("-----PAYLOAD-----");
     console.log(thrusterPayload);
+    console.log(device);
     device.publish('THRUSTERS', JSON.stringify(thrusterPayload));
   });
 });
